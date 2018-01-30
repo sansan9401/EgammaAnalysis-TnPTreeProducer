@@ -7,7 +7,8 @@ filesMiniAOD_Preliminary2017 = {
         ),
     
     'data' : cms.untracked.vstring( 
-        '/store/data/Run2017C/SingleElectron/MINIAOD/PromptReco-v1/000/299/368/00000/08588A8B-836D-E711-8ACF-02163E01A3AC.root',
+                 '/store/data/Run2017B/SingleElectron/MINIAOD/17Nov2017-v1/40000/00701B6B-E9DB-E711-B111-02163E019D6D.root',
+        #        '/store/data/Run2017C/SingleElectron/MINIAOD/PromptReco-v1/000/299/368/00000/08588A8B-836D-E711-8ACF-02163E01A3AC.root',
         #        '/store/data/Run2017B/SingleElectron/MINIAOD/PromptReco-v1/000/297/050/00000/166F7BB0-3C56-E711-BD8B-02163E0145C5.root',     
         )
 }
