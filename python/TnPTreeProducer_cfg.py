@@ -124,20 +124,23 @@ if (varOptions.isMC):
 #    options['TnPHLTTagFilters']    = cms.vstring()
 #    options['TnPHLTProbeFilters']  = cms.vstring()
 #    options['HLTFILTERTOMEASURE']  = cms.vstring("")
-#    options['TnPPATHS']            = cms.vstring("HLT_Ele27_eta2p1_WPTight_Gsf_v*") #FOR 2016
-#    options['TnPHLTTagFilters']    = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter") #FOR 2016
-#     options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter") #FOR 2016
-    options['TnPPATHS']            = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
-    options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
+    options['TnPPATHS']            = cms.vstring("HLT_Ele27_eta2p1_WPTight_Gsf_v*") #FOR 2016
+    options['TnPHLTTagFilters']    = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter") #FOR 2016
+    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter") #FOR 2016
+#    options['TnPPATHS']            = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
+#    options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
     options['TnPHLTProbeFilters']  = cms.vstring()
-    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
+#    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['GLOBALTAG']           = 'auto:run2_mc'
 else:
     options['OUTPUT_FILE_NAME']    = "TnPTree_data.root"
-    options['TnPPATHS']            = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
-    options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
+#    options['TnPPATHS']            = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
+#    options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
+    options['TnPPATHS']            = cms.vstring("HLT_Ele27_eta2p1_WPTight_Gsf_v*")
+    options['TnPHLTTagFilters']    = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter")
     options['TnPHLTProbeFilters']  = cms.vstring()
-    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
+#    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
+    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter")
     options['GLOBALTAG']           = 'auto:run2_data'
 
 if varOptions.GT != "auto" :
@@ -147,7 +150,9 @@ if varOptions.GT != "auto" :
 ###################################################################
 ## Define input files for test local run
 ###################################################################
-from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Preliminary2017 as inputs
+#from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Preliminary2017 as inputs
+from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Legacy2016 as inputs ##FRA create this file
+
 if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_23Sep2016 as inputs #switch to 2017 samples if want to cmsRun on AOD
     
 options['INPUT_FILE_NAME'] = inputs['data']
@@ -223,9 +228,10 @@ process.tnpEleTrig = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     allProbes     = cms.InputTag("probeEle"),
                                     flags = cms.PSet(
                                         passingHLT        = cms.InputTag("probeElePassHLT"),
-                                        passingLoose94X   = cms.InputTag("probeEleCutBasedLoose94X" ),
-                                        passingMedium94X  = cms.InputTag("probeEleCutBasedMedium94X"),
-                                        passingTight94X   = cms.InputTag("probeEleCutBasedTight94X" ),
+
+                                        passingLoose80X   = cms.InputTag("probeEleCutBasedLoose80X" ),
+                                        passingMedium80X  = cms.InputTag("probeEleCutBasedMedium80X"),
+                                        passingTight80X   = cms.InputTag("probeEleCutBasedTight80X" ),
                                         ),
                                     )
 
