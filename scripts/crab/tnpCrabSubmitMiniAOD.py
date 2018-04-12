@@ -53,7 +53,7 @@ if __name__ == '__main__':
     config.Data.splitting     = 'FileBased'
     config.Data.unitsPerJob   = 8
 #    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=94X_mc2017_realistic_v10']
-    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=80X_dataRun2_2016LegacyRepro_v3']
+    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=80X_dataRun2_2016LegacyRepro_v4']
 
     config.General.requestName  = 'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8'
     config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAOD-RECOSIMstep_94X_mc2017_realistic_v10-v1/MINIAODSIM'#FRA update this
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     config.Data.lumiMask      = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
     config.Data.unitsPerJob   = 100
 #    config.JobType.pyCfgParams  = ['isMC=False',doEleTree,doPhoTree,'GT=94X_dataRun2_ReReco17_forValidation']
-    config.JobType.pyCfgParams  = ['isMC=False',doEleTree,doPhoTree,'GT=80X_dataRun2_2016LegacyRepro_v3'] 
+    config.JobType.pyCfgParams  = ['isMC=False',doEleTree,doPhoTree,'GT=80X_dataRun2_2016LegacyRepro_v4'] 
 
 #    config.General.requestName  = '17Nov2017_RunB'
 #    config.Data.inputDataset    = '/SingleElectron/Run2017B-17Nov2017-v1/MINIAOD'
