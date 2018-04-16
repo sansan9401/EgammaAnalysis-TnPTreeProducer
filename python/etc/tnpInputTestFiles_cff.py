@@ -2,8 +2,7 @@ import FWCore.ParameterSet.Config as cms
 
 filesMiniAOD_Legacy2016 = {
     'mc' :  cms.untracked.vstring(
-       '/store/mc/RunIIFall17MiniAOD/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/20000/001C74A0-B4D6-E711\
--BD4B-FA163EB4F61D.root'),#FRA this has to be updated with the correct samples for legacy
+       '/store/mc/RunIIFall17MiniAOD/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/20000/001C74A0-B4D6-E711-BD4B-FA163EB4F61D.root'),#FRA this has to be updated with the correct samples for legacy
         'data' : cms.untracked.vstring(
             '/store/data/Run2016B/SingleElectron/MINIAOD/07Aug17_ver1-v1/110000/0248293E-578B-E711-A639-44A842CFC9D9.root'
             )
