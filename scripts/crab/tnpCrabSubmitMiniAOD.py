@@ -58,12 +58,12 @@ if __name__ == '__main__':
     
     config.General.requestName  = 'DYToLL_mcAtNLO-RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2'
     config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/MINIAODSIM'
-    submit(config)
+#    submit(config)
 
 
     config.General.requestName  = 'DYToLL_madgraph_Moriond17-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2'
     config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v2/MINIAODSIM'
-    submit(config)
+ #   submit(config)
 
 
     ##### now submit DATA
@@ -78,28 +78,28 @@ if __name__ == '__main__':
 
     config.General.requestName  = '07Aug17_Run2016Bv1'
     config.Data.inputDataset    = '/SingleElectron/Run2016B-07Aug17_ver1-v1/MINIAOD' #FRA which one of the two?
-    submit(config)    
+  #  submit(config)    
     config.General.requestName  = '07Aug17_Run2016Bv2'
     config.Data.inputDataset    = '/SingleElectron/Run2016B-07Aug17_ver2-v2/MINIAOD' #FRA which one of the two?
-    submit(config)    
+   # submit(config)    
     config.General.requestName  = '07Aug17_Run2016C'
     config.Data.inputDataset    = '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD'
-  #  submit(config)    
+    submit(config)    
     config.General.requestName  = '07Aug17_Run2016D'
     config.Data.inputDataset    = '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD'
-   # submit(config)    
+    submit(config)    
     config.General.requestName  = '07Aug17_Run2016E'
     config.Data.inputDataset    = '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD'
- #   submit(config)    
+    submit(config)    
     config.General.requestName  = '07Aug17_Run2016F'
     config.Data.inputDataset    = '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD'
-    #submit(config)    
+    submit(config)    
     config.General.requestName  = '07Aug17_Run2016G'
     config.Data.inputDataset    = '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD'
-    #submit(config)    
+    submit(config)    
     config.General.requestName  = '07Aug17_Run2016H'
     config.Data.inputDataset    = '/SingleElectron/Run2016H-07Aug17-v1/MINIAOD'
-    #submit(config)    
+    submit(config)    
 
 
 
