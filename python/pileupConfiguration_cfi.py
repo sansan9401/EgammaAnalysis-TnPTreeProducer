@@ -37,9 +37,9 @@ data_pu_distribs = {"Jamboree_golden_JSON" : [5.12e+04,3.66e+05,5.04e+05,4.99e+0
 pileupProducer = cms.EDProducer("PileupWeightProducer",
                                 #hardcodedWeights = cms.untracked.bool(True),
                                 pileupInfoTag    = cms.InputTag("slimmedAddPileupInfo"),
-                 #               PileupMC = cms.vdouble(pu_distribs["80X_mcRun2_asymptotic_v2"]),
-                 #               PileupData = cms.vdouble(data_pu_distribs["MORIOND2017_JSON_36fb_xSec69.2mb"]),
+                                PileupMC = cms.vdouble(pu_distribs["80X_mcRun2_asymptotic_v2"]),
+                                PileupData = cms.vdouble(data_pu_distribs["MORIOND2017_JSON_36fb_xSec69.2mb"]),
                                 ####2 Nov
-                                PileupMC = cms.vdouble(pu_distribs["94X_mcRun2"]),
-                                PileupData = cms.vdouble(data_pu_distribs["2017_DATA_xSec69.2mb_94X_17Jan"]),
+#                                PileupMC = cms.vdouble(pu_distribs["94X_mcRun2"]),
+#                                PileupData = cms.vdouble(data_pu_distribs["2017_DATA_xSec69.2mb_94X_17Jan"]),
                                 )
