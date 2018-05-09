@@ -56,9 +56,9 @@ if __name__ == '__main__':
     config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=80X_dataRun2_2016LegacyRepro_v4']
 
     
-    config.General.requestName  = 'DYToLL_mcAtNLO-RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2'
-    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/MINIAODSIM'
-#    submit(config)
+    config.General.requestName  = 'DYJetsToLL_M-50_13TeV-amcatnloFXFX-RunIISummer16MiniAODv2-BSandPUSummer16_80X_mcRun2'
+    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv2-BS2016_BSandPUSummer16_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/MINIAODSIM'
+    submit(config)
 
 
     config.General.requestName  = 'DYToLL_madgraph_Moriond17-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2'
@@ -84,22 +84,22 @@ if __name__ == '__main__':
    # submit(config)    
     config.General.requestName  = '07Aug17_Run2016C'
     config.Data.inputDataset    = '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD'
-    submit(config)    
+    #submit(config)    
     config.General.requestName  = '07Aug17_Run2016D'
     config.Data.inputDataset    = '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD'
-    submit(config)    
+    #submit(config)    
     config.General.requestName  = '07Aug17_Run2016E'
     config.Data.inputDataset    = '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD'
-    submit(config)    
+    #submit(config)    
     config.General.requestName  = '07Aug17_Run2016F'
     config.Data.inputDataset    = '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD'
-    submit(config)    
+    #submit(config)    
     config.General.requestName  = '07Aug17_Run2016G'
     config.Data.inputDataset    = '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD'
-    submit(config)    
+    #submit(config)    
     config.General.requestName  = '07Aug17_Run2016H'
     config.Data.inputDataset    = '/SingleElectron/Run2016H-07Aug17-v1/MINIAOD'
-    submit(config)    
+    #submit(config)    
 
 
 

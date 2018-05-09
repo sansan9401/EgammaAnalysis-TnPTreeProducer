@@ -120,17 +120,16 @@ if (varOptions.isMC):
     options['isMC']                = cms.bool(True)
     options['OUTPUT_FILE_NAME']    = "TnPTree_mc.root"
     if varOptions.isAOD :  options['OUTPUT_FILE_NAME']    = "TnPTree_mc_aod.root"
-#    options['TnPPATHS']            = cms.vstring("HLT*")
-#    options['TnPHLTTagFilters']    = cms.vstring()
-#    options['TnPHLTProbeFilters']  = cms.vstring()
-#    options['HLTFILTERTOMEASURE']  = cms.vstring("")
+
+
     options['TnPPATHS']            = cms.vstring("HLT_Ele27_eta2p1_WPTight_Gsf_v*") #FOR 2016
     options['TnPHLTTagFilters']    = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter") #FOR 2016
     options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter") #FOR 2016
-#    options['TnPPATHS']            = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
-#    options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
+#    options['TnPPATHS']            = cms.vstring("HLT_*") #FOR 2016                                                                                                            
+#    options['TnPHLTTagFilters']    = cms.vstring("hlt*TrackIsoFilter") #FOR 2016                                                                                                         
+#    options['HLTFILTERTOMEASURE']  = cms.vstring("hlt*TrackIsoFilter") #FOR 2016                                                                                                          
+
     options['TnPHLTProbeFilters']  = cms.vstring()
-#    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['GLOBALTAG']           = 'auto:run2_mc'
 else:
     options['OUTPUT_FILE_NAME']    = "TnPTree_data.root"
