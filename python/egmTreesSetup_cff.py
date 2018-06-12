@@ -13,6 +13,7 @@ def setTagsProbes(process, options):
     hltObjects     = 'slimmedPatTrigger' # 'selectedPatTrigger' FOR 2016
     genParticles   = 'prunedGenParticles'
     SCEleMatcher   = 'PatElectronMatchedCandidateProducer' 
+
     if (options['useAOD']):
         eleHLTProducer = 'GsfElectronTriggerCandProducer'
         gamHLTProducer = 'PhotonTriggerCandProducer'
@@ -127,7 +128,6 @@ def setTagsProbes(process, options):
     egmEleID.setIDs(process, options)
     egmPhoID.setIDs(process, options)
 
-    
 ###################################################################################
 ################  --- SEQUENCES
 ###################################################################################      
@@ -144,6 +144,13 @@ def setSequences(process, options):
             )
         process.init_sequence += process.enCalib_sequence
 
+    if options['addSUSY'] : process.init_sequence += process.susy_sequence
+    process.init_sequence += process.egmGsfElectronIDSequence
+    process.init_sequence += process.eleVarHelper 
+    if options['addSUSY'] : process.init_sequence += process.susy_sequence_requiresVID
+
+
+
     process.sc_sequence  = cms.Sequence( )
     process.ele_sequence = cms.Sequence( )
     process.pho_sequence = cms.Sequence( )
@@ -151,11 +158,12 @@ def setSequences(process, options):
     
     process.tag_sequence = cms.Sequence(
         process.goodElectrons             +
-        process.egmGsfElectronIDSequence  +
         process.tagEleCutBasedTight       +
         process.tagEle 
         )
-        
+
+
+
     if options['useAOD'] : process.sc_sequence += process.sc_sequenceAOD
     else :                 process.sc_sequence += process.sc_sequenceMiniAOD
     process.sc_sequence += process.probeSC
@@ -176,8 +184,10 @@ def setSequences(process, options):
         process.probeEleCutBasedLoose94X  +
         process.probeEleCutBasedMedium94X +
         process.probeEleCutBasedTight94X  +
+        process.probeEleMVA94XwpLnoiso        +
         process.probeEleMVA94Xwp90noiso        +
         process.probeEleMVA94Xwp80noiso        +
+        process.probeEleMVA94XwpLiso        +
         process.probeEleMVA94Xwp90iso        +
         process.probeEleMVA94Xwp80iso        +
         process.probeEle 
