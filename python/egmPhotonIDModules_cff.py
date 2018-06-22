@@ -20,7 +20,8 @@ def setIDs(process, options):
     my_id_modules = ['RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_Spring16_V2p2_cff'   ,
                      'RecoEgamma.PhotonIdentification.Identification.mvaPhotonID_Spring16_nonTrig_V1_cff',
                      'RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_Fall17_94X_V1_cff',
-                     'RecoEgamma.PhotonIdentification.Identification.mvaPhotonID_Fall17_94X_V1_cff',
+                     'RecoEgamma.PhotonIdentification.Identification.mvaPhotonID_Fall17_94X_V1_cff'
+#                     'RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_Fall17_94X_OOT_V1_cff',
                      ]
                  
     for idmod in my_id_modules:
@@ -58,6 +59,11 @@ def setIDs(process, options):
     process.probePhoCutBasedMedium94X.selection = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-V1-medium" )
     process.probePhoCutBasedTight94X.selection  = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-V1-tight"  )
 
+
+    process.probeOOTPhoCutBasedLoose94X  = process.probePhoCutBasedLoose.clone()
+    process.probeOOTPhoCutBasedTight94X  = process.probePhoCutBasedLoose.clone()
+#    process.probeOOTPhoCutBasedLoose94X.selection =  cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-OOT-V1-loose")
+#    process.probeOOTPhoCutBasedTight94X.selection =  cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-OOT-V1-tight")
 
     process.probePhoMVA = process.probePhoCutBasedLoose.clone()
     process.probePhoMVA.selection = cms.InputTag("egmPhotonIDs:mvaPhoID-Spring16-nonTrig-V1-wp90")    

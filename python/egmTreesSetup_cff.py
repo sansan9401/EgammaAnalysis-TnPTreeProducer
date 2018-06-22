@@ -216,6 +216,8 @@ def setSequences(process, options):
         process.probePhoCutBasedLoose94X  +
         process.probePhoCutBasedMedium94X +
         process.probePhoCutBasedTight94X  +
+#        process.probeOOTPhoCutBasedLoose94X  +
+#        process.probeOOTPhoCutBasedTight94X  + #OOT still under development
         process.probePhoMVA94Xwp90       +
         process.probePhoMVA94Xwp80       +
         process.probePho                
