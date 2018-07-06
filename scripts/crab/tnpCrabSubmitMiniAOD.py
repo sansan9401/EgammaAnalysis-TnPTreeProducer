@@ -3,12 +3,12 @@ import sys
 config = config()
 
 submitVersion ="2017Data_FullJson"
-doEleTree = 'doEleID=True'
+doEleTree = 'doEleID=False'
 doPhoTree = 'doPhoID=True'
 #doHLTTree = 'doTrigger=False'
 #calibEn   = 'useCalibEn=False'
 
-mainOutputDir = '/store/group/phys_egamma/soffi/TnP/ntuples_06152018/%s' % submitVersion
+mainOutputDir = '/store/group/phys_egamma/soffi/TnP/ntuples_07042018_wOOTid/%s' % submitVersion
 
 config.General.transferLogs = False
 

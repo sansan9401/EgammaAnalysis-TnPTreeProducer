@@ -321,8 +321,8 @@ process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                          passingMedium94X  = cms.InputTag("probePhoCutBasedMedium94X"),
                                          passingTight94X   = cms.InputTag("probePhoCutBasedTight94X"),
 
-#                                         passingOOTLoose94X   = cms.InputTag("probeOOTPhoCutBasedLoose94X"),
-#                                         passingOOTTight94X   = cms.InputTag("probeOOTPhoCutBasedTight94X"),
+                                         passingOOTLoose94X   = cms.InputTag("probeOOTPhoCutBasedLoose94X"),
+                                         passingOOTTight94X   = cms.InputTag("probeOOTPhoCutBasedTight94X"),
                                          
                                          passingMVA94Xwp90 = cms.InputTag("probePhoMVA94Xwp90"),
                                          passingMVA94Xwp80 = cms.InputTag("probePhoMVA94Xwp80"),
