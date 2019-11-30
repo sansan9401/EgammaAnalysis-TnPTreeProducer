@@ -222,9 +222,9 @@ process.tnpEleTrig = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     probeMatches  = cms.InputTag("genProbeEle"),
                                     allProbes     = cms.InputTag("probeEle"),
                                     flags = cms.PSet(
-                                        passingLoose94X   = cms.InputTag("probeEleCutBasedLoose94X" ),
-                                        passingMedium94X  = cms.InputTag("probeEleCutBasedMedium94X"),
-                                        passingTight94X   = cms.InputTag("probeEleCutBasedTight94X" ),
+                                        passingLoose94XV2   = cms.InputTag("probeEleCutBasedLoose94XV2" ),
+                                        passingMedium94XV2  = cms.InputTag("probeEleCutBasedMedium94XV2"),
+                                        passingTight94XV2   = cms.InputTag("probeEleCutBasedTight94XV2" ),
                                         ),
                                     )
 for flag in options['HLTFILTERSTOMEASURE']:
