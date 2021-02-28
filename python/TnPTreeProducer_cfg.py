@@ -47,7 +47,7 @@ if varOptions.isAOD and varOptions.doTrigger:  log.warning('AOD is not supported
 if not varOptions.isAOD and varOptions.doRECO: log.warning('miniAOD is not supported for doRECO, please consider using AOD')
 
 from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
-if varOptions.era not in ['2016', '2017', '2018', 'UL2017', 'UL2018']: log.error('%s is not a valid era' % varOptions.era)
+if varOptions.era not in ['2016', '2017', '2018', 'UL2016preVFP', 'UL2016postVFP', 'UL2017', 'UL2018']: log.error('%s is not a valid era' % varOptions.era)
 if ('UL' in varOptions.era)!=(isReleaseAbove(10, 6)):
   log.error('Inconsistent release for era %s. Use CMSSW_10_6_X for UL and CMSSW_10_2_X for rereco' % varOptions.era)
 
@@ -99,14 +99,18 @@ if varOptions.GT == "auto":
     if options['era'] == '2016':   options['GLOBALTAG'] = '94X_mcRun2_asymptotic_v3'
     if options['era'] == '2017':   options['GLOBALTAG'] = '94X_mc2017_realistic_v17'
     if options['era'] == '2018':   options['GLOBALTAG'] = '102X_upgrade2018_realistic_v21'
-    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_dataRun2_v28'
-    if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_dataRun2_v28'
+    if options['era'] == 'UL2016preVFP': options['GLOBALTAG'] = '106X_mcRun2_asymptotic_preVFP_v9'
+    if options['era'] == 'UL2016postVFP': options['GLOBALTAG'] = '106X_mcRun2_asymptotic_v15'    
+    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_mc2017_realistic_v8'
+    if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_upgrade2018_realistic_v15_L1v1'
   else:
     if options['era'] == '2016':   options['GLOBALTAG'] = '94X_dataRun2_v10'
     if options['era'] == '2017':   options['GLOBALTAG'] = '94X_dataRun2_v11'
     if options['era'] == '2018':   options['GLOBALTAG'] = '102X_dataRun2_v13'
-    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_mc2017_realistic_v7'
-    if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_upgrade2018_realistic_v11_L1v1'
+    if options['era'] == 'UL2016preVFP': options['GLOBALTAG'] = '106X_dataRun2_v32'
+    if options['era'] == 'UL2016postVFP': options['GLOBALTAG'] = '106X_dataRun2_v32'
+    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_dataRun2_v32'
+    if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_dataRun2_v32'
 else:
   options['GLOBALTAG'] = varOptions.GT
 
@@ -114,8 +118,8 @@ else:
 # Settings for trigger tag and probe measurement
 #################################################
 if '2016' in options['era']:
-  options['TnPPATHS']           = cms.vstring("HLT_Ele27_eta2p1_WPTight_Gsf_v*")
-  options['TnPHLTTagFilters']   = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter")
+  options['TnPPATHS']           = cms.vstring("HLT_Ele27_WPTight_Gsf_v*")
+  options['TnPHLTTagFilters']   = cms.vstring("hltEle27WPTightGsfTrackIsoFilter")
   options['TnPHLTProbeFilters'] = cms.vstring()
   options['HLTFILTERSTOMEASURE']= {"passHltEle27WPTightGsf" :                           cms.vstring("hltEle27WPTightGsfTrackIsoFilter"),
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1L1match" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
@@ -125,10 +129,13 @@ if '2016' in options['era']:
                                   } # Some examples, you can add multiple filters (or OR's of filters, note the vstring) here, each of them will be added to the tuple
 
 elif '2017' in options['era']:
+#  options['TnPPATHS']           = cms.vstring("HLT_Ele35_WPTight_Gsf_v*")
+#  options['TnPHLTTagFilters']   = cms.vstring("hltEle35noerWPTightGsfTrackIsoFilter")
   options['TnPPATHS']           = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
-  options['TnPHLTTagFilters']   = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
+  options['TnPHLTTagFilters']   = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")  
   options['TnPHLTProbeFilters'] = cms.vstring()
   options['HLTFILTERSTOMEASURE']= {"passHltEle32DoubleEGWPTightGsf" :                   cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter"),
+                                   "passHltEle32WPTightGsf" :                           cms.vstring("hltEle32WPTightGsfTrackIsoFilter"),
                                    "passEGL1SingleEGOr" :                               cms.vstring("hltEGL1SingleEGOrFilter"),
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1L1match" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1" :        cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),

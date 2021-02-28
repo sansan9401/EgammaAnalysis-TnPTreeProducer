@@ -29,6 +29,16 @@ filesMiniAOD_UL2017 = {
     'data' : cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/SingleElectron-Run2017F-09Aug2019_UL2017.root'),
 }
 
+filesMiniAOD_UL2016preVFP = {
+    'mc' :   cms.untracked.vstring(''),
+    'data' : cms.untracked.vstring('root://cms-xrd-global.cern.ch//store/data/Run2016B/SingleElectron/MINIAOD/21Feb2020_ver2_UL2016_HIPM-v1/00000/00A5D384-5256-7940-BAFB-C2C549342582.root'),
+}
+
+filesMiniAOD_UL2016postVFP = {
+    'mc' :   cms.untracked.vstring(''),
+    'data' : cms.untracked.vstring(''),
+}
+
 
 # AOD UL testfiles
 filesAOD_UL2018 = {

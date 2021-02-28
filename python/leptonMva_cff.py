@@ -1,3 +1,4 @@
+import re
 import FWCore.ParameterSet.Config as cms
 
 #
@@ -83,7 +84,7 @@ def leptonMvaSequence(process, options, tnpVars):
 
     process.leptonMvaTOP = cms.EDProducer('LeptonMvaProducer',
       leptonMvaType        = cms.string("leptonMvaTOP"),
-      weightFile           = cms.FileInPath('EgammaAnalysis/TnPTreeProducer/data/el_TOP%s_BDTG.weights.xml' % (options['era'].replace('20', '').replace('UL', ''))),
+      weightFile           = cms.FileInPath('EgammaAnalysis/TnPTreeProducer/data/el_TOP%s_BDTG.weights.xml' % (re.search(r"20(\d{2})",options['era']).group(1))),
       probes               = cms.InputTag('slimmedElectrons'),
       miniIsoChg           = cms.InputTag('isoForEle%s:miniIsoChg' % ('Spring15' if '2016' in options['era'] else 'Fall17')),
       miniIsoAll           = cms.InputTag('isoForEle%s:miniIsoAll' % ('Spring15' if '2016' in options['era'] else 'Fall17')),
