@@ -70,6 +70,8 @@ def setGoodParticlesMiniAOD(process, options):
                                           beamSpot         = cms.InputTag("offlineBeamSpot"),
                                           conversions      = cms.InputTag("reducedEgamma:reducedConversions"),
                                           pfCandidates     = cms.InputTag("packedPFCandidates"),
+                                          StorePrescale    = cms.vstring(options['StorePrescale']),
+                                          StoreL1Threshold = cms.vstring(options['StoreL1Threshold']),
                                           )
 
     ####################  Electron collection

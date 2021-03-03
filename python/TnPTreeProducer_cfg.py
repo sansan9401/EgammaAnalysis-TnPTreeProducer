@@ -145,6 +145,8 @@ elif '2017' in options['era']:
                                    "passHltEle27WPTightGsf" :                           cms.vstring("hltEle27WPTightGsfTrackIsoFilter"),
                                    "passHltEle35WPTightGsf" :                           cms.vstring("hltEle35noerWPTightGsfTrackIsoFilter"),
                                   }
+  options['StorePrescale']=["HLT_Ele27_WPTight_Gsf","HLT_Ele32_WPTight_Gsf"]
+  options['StoreL1Threshold']=["HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL"]
 
 elif '2018'  in options['era']:
   options['TnPPATHS']           = cms.vstring("HLT_Ele32_WPTight_Gsf_v*")
@@ -159,6 +161,8 @@ elif '2018'  in options['era']:
                                    "passHltEle27WPTightGsf" :                           cms.vstring("hltEle27WPTightGsfTrackIsoFilter"),
                                    "passHltEle28WPTightGsf" :                           cms.vstring("hltEle28WPTightGsfTrackIsoFilter"),
                                   }
+  options['StorePrescale']=["HLT_Ele27_WPTight_Gsf","HLT_Ele28_WPTight_Gsf"]
+  options['StoreL1Threshold']=["HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL"]
 
 # Apply L1 matching (using L1Threshold) when flag contains "L1match" in name
 options['ApplyL1Matching']      = any(['L1match' in flag for flag in options['HLTFILTERSTOMEASURE'].keys()])
@@ -255,7 +259,13 @@ process.tnpEleTrig = cms.EDAnalyzer("TagProbeFitTreeProducer",
 
 for flag in options['HLTFILTERSTOMEASURE']:
   setattr(process.tnpEleTrig.flags, flag, cms.InputTag(flag))
-
+setattr(process.tnpEleTrig.variables,"el_l1et",cms.InputTag("eleVarHelper:l1et"))
+for hltpath in options['StorePrescale']:
+  hltpath_=hltpath.replace("_","")
+  setattr(process.tnpEleTrig.variables,"Prescale"+hltpath_,cms.InputTag("eleVarHelper:Prescale"+hltpath_))
+for hltpath in options['StoreL1Threshold']:
+  hltpath_=hltpath.replace("_","")
+  setattr(process.tnpEleTrig.variables,"L1Theshold"+hltpath_,cms.InputTag("eleVarHelper:L1Threshold"+hltpath_))
 
 process.tnpEleReco = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     mcTruthCommonStuff,

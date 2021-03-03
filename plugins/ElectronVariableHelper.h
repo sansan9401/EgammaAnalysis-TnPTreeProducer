@@ -30,6 +30,9 @@
 #include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
 #include "EgammaAnalysis/TnPTreeProducer/plugins/isolations.h"
 
+#include "HLTrigger/HLTcore/interface/HLTPrescaleProvider.h"
+
+#include <regex>
 #include "TMath.h"
 
 
@@ -40,6 +43,7 @@ class ElectronVariableHelper : public edm::EDProducer {
   virtual ~ElectronVariableHelper() ;
 
   virtual void produce(edm::Event & iEvent, const edm::EventSetup & iSetup) override;
+  virtual void beginRun(const edm::Run& run,const edm::EventSetup& iSetup);
 
 private:
   edm::EDGetTokenT<std::vector<T> > probesToken_;
@@ -48,6 +52,13 @@ private:
   edm::EDGetTokenT<reco::ConversionCollection> conversionsToken_;
   edm::EDGetTokenT<reco::BeamSpot> beamSpotToken_;
   edm::EDGetTokenT<edm::View<reco::Candidate>> pfCandidatesToken_;
+
+  HLTPrescaleProvider hltPSProv_;
+  std::string hltProcess_;
+  std::vector<std::string> PrescalePaths_;
+  std::vector<std::string> PrescaleNames_;
+  std::vector<std::string> L1ThresholdPaths_;
+  std::vector<std::string> L1ThresholdNames_;
 
   bool isMiniAODformat;
 };
@@ -59,7 +70,29 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   l1EGToken_(consumes<BXVector<l1t::EGamma> >(iConfig.getParameter<edm::InputTag>("l1EGColl"))),
   conversionsToken_(consumes<reco::ConversionCollection>(iConfig.getParameter<edm::InputTag>("conversions"))),
   beamSpotToken_(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("beamSpot"))),
-  pfCandidatesToken_(consumes<edm::View<reco::Candidate>>(iConfig.getParameter<edm::InputTag>("pfCandidates"))){
+  pfCandidatesToken_(consumes<edm::View<reco::Candidate>>(iConfig.getParameter<edm::InputTag>("pfCandidates"))),
+  hltPSProv_(iConfig,consumesCollector(),*this),
+  hltProcess_("HLT"){
+
+  if(iConfig.exists("StorePrescale")){
+    PrescalePaths_=iConfig.getParameter<std::vector<std::string>>("StorePrescale");
+    unsigned int npath=PrescalePaths_.size();
+    for(unsigned int i=0;i<npath;i++){
+      std::string prescalename=std::regex_replace("Prescale"+PrescalePaths_.at(i),std::regex("_"),"");
+      PrescaleNames_.push_back(prescalename);
+      produces<edm::ValueMap<float>>(prescalename);
+    }
+  }
+
+  if(iConfig.exists("StoreL1Threshold")){
+    L1ThresholdPaths_=iConfig.getParameter<std::vector<std::string>>("StoreL1Threshold");
+    unsigned int npath=L1ThresholdPaths_.size();
+    for(unsigned int i=0;i<npath;i++){
+      std::string l1thresholdname=std::regex_replace("L1Threshold"+L1ThresholdPaths_.at(i),std::regex("_"),"");
+      L1ThresholdNames_.push_back(l1thresholdname);
+      produces<edm::ValueMap<float>>(l1thresholdname);
+    }
+  }
 
   produces<edm::ValueMap<float>>("dz");
   produces<edm::ValueMap<float>>("dxy");
@@ -132,6 +165,53 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 
   std::vector<float> hasMatchedConversionVals;
 
+  std::vector<std::string> triggernames=hltPSProv_.hltConfigProvider().triggerNames();
+  std::vector<std::vector<float>> Prescales;
+  unsigned int nPrescalePaths=PrescalePaths_.size();
+  for(unsigned int i=0;i<nPrescalePaths;i++){
+    int prescale=0;
+    std::vector<std::string> pathswithversion=HLTConfigProvider::restoreVersion(triggernames,PrescalePaths_.at(i));
+    if(pathswithversion.size()==1){
+      std::pair<std::vector<std::pair<std::string,int> >,int> prescaledetail=hltPSProv_.prescaleValuesInDetail(iEvent,iSetup,pathswithversion.at(0));
+      std::vector<std::pair<std::string,int>> l1detail=prescaledetail.first;
+      int l1prescale=999999;
+      int hltprescale=prescaledetail.second;
+      unsigned int nl1detail=l1detail.size();
+      for(unsigned int j=0;j<nl1detail;j++){
+	int this_l1prescale=l1detail.at(j).second;
+	if(this_l1prescale!=0&&this_l1prescale<l1prescale) l1prescale=this_l1prescale;
+      }
+      if(l1prescale==999999) l1prescale=0;
+      prescale=l1prescale*hltprescale;
+    }else if(pathswithversion.size()>1){
+      edm::LogWarning("StorePrescale")<<"multiple matches "<<pathswithversion.at(0)<<" "<<pathswithversion.at(1)<<" ... total: "<<pathswithversion.size();
+    }
+    Prescales.push_back(std::vector<float>((*probes).size(),prescale));
+  }
+  std::vector<std::vector<float>> L1Thresholds;
+  unsigned int nL1ThresholdPaths=L1ThresholdPaths_.size();
+  for(unsigned int i=0;i<nL1ThresholdPaths;i++){
+    float l1threshold=1e6;
+    std::vector<std::string> pathswithversion=HLTConfigProvider::restoreVersion(triggernames,L1ThresholdPaths_.at(i));
+    if(pathswithversion.size()==1){
+      std::pair<std::vector<std::pair<std::string,int> >,int> prescaledetail=hltPSProv_.prescaleValuesInDetail(iEvent,iSetup,pathswithversion.at(0));
+      std::vector<std::pair<std::string,int>> l1detail=prescaledetail.first;
+      unsigned int nl1detail=l1detail.size();
+      for(unsigned int j=0;j<nl1detail;j++){
+	if(l1detail.at(j).second!=1) continue;
+	std::smatch match;
+	if(std::regex_match(l1detail.at(j).first,match,std::regex("L1_DoubleEG_[^0-9_]*([0-9]*)_([0-9]*).*"))){
+	  float this_l1threshold=std::stof(match[1].str());
+	  if(this_l1threshold<l1threshold) l1threshold=this_l1threshold;
+	}
+      }
+      if(l1threshold==1e6) l1threshold=0.;
+    }else if(pathswithversion.size()>1){
+      edm::LogWarning("StoreL1Threshold")<<"multiple matches "<<pathswithversion.at(0)<<" "<<pathswithversion.at(1)<<" ... total: "<<pathswithversion.size();
+    }
+    L1Thresholds.push_back(std::vector<float>((*probes).size(),l1threshold));
+  }    
+
   typename std::vector<T>::const_iterator probe, endprobes = probes->end();
 
   for (probe = probes->begin(); probe != endprobes; ++probe) {
@@ -149,11 +229,11 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 
     mhVals.push_back(float(probe->gsfTrack()->hitPattern().numberOfLostHits(reco::HitPattern::MISSING_INNER_HITS)));
     gsfhVals.push_back(float(probe->gsfTrack()->hitPattern().trackerLayersWithMeasurement()));
-    float l1e = 999999.;    
-    float l1et = 999999.;
+    float l1e = 0.;    
+    float l1et = 0.;
     float l1eta = 999999.;
     float l1phi = 999999.;
-    float pfpt = 999999.;
+    float pfpt = 0.;
     float dRmin = 0.3;
 
     for (std::vector<l1t::EGamma>::const_iterator l1Cand = l1Cands->begin(0); l1Cand != l1Cands->end(0); ++l1Cand) {
@@ -254,6 +334,12 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   writeValueMap(iEvent, probes, ioemiopVals, "ioemiop");
   writeValueMap(iEvent, probes, ocVals, "5x5circularity");
   writeValueMap(iEvent, probes, hasMatchedConversionVals, "hasMatchedConversion");
+  for(unsigned int i=0;i<PrescalePaths_.size();i++){
+    writeValueMap(iEvent,probes,Prescales.at(i),PrescaleNames_.at(i));
+  }
+  for(unsigned int i=0;i<L1ThresholdPaths_.size();i++){
+    writeValueMap(iEvent,probes,L1Thresholds.at(i),L1ThresholdNames_.at(i));
+  }
 
   // PF lepton isolations (will only work in miniAOD)
   if(isMiniAODformat){
@@ -267,6 +353,15 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
       isMiniAODformat = false;
     }
   }
+}
+template<class T>
+void ElectronVariableHelper<T>::beginRun(const edm::Run& run,const edm::EventSetup& setup)
+{
+  bool changed=false;
+  hltPSProv_.init(run,setup,hltProcess_,changed);
+  const l1t::L1TGlobalUtil& l1GtUtils = hltPSProv_.l1tGlobalUtil();
+  std::cout <<"l1 menu "<<l1GtUtils.gtTriggerMenuName()<<" version "<<l1GtUtils.gtTriggerMenuVersion()<<" comment "<<std::endl;
+  std::cout <<"hlt name "<<hltPSProv_.hltConfigProvider().tableName()<<std::endl;
 }
 
 #endif
