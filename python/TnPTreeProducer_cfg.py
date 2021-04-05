@@ -127,6 +127,8 @@ if '2016' in options['era']:
                                    "passHltDoubleEle33CaloIdLMWSeedLegL1match" :        cms.vstring("hltEG33CaloIdLMWPMS2Filter"),
                                    "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
                                   } # Some examples, you can add multiple filters (or OR's of filters, note the vstring) here, each of them will be added to the tuple
+  options['StorePrescale']=[]
+  options['StoreL1Threshold']=["HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL"]
 
 elif '2017' in options['era']:
 #  options['TnPPATHS']           = cms.vstring("HLT_Ele35_WPTight_Gsf_v*")
