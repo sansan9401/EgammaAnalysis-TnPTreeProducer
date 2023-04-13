@@ -82,6 +82,8 @@ def leptonMvaSequence(process, options, tnpVars):
       debug                = cms.bool(False), # set to True if you want to sync with your analysis
     )
 
+    # RemoveStrings = ['20', 'UL', 'preVFP', 'postVFP']
+
     process.leptonMvaTOP = cms.EDProducer('LeptonMvaProducer',
       leptonMvaType        = cms.string("leptonMvaTOP"),
       weightFile           = cms.FileInPath('EgammaAnalysis/TnPTreeProducer/data/el_TOP%s_BDTG.weights.xml' % (re.search(r"20(\d{2})",options['era']).group(1))),

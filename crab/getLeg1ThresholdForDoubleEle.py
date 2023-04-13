@@ -9,7 +9,7 @@
 #   - leg1 threshold
 #   - json for these thresholds
 #
-def getLeg1ThresholdForDoubleEle(year, hltTrigger='HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL', debug=False):
+def getLeg1ThresholdForDoubleEle(year, hltTrigger='HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ', debug=False):
   import urllib, os, glob
   from FWCore.PythonUtilities.LumiList import LumiList
   def download(url, destination):
@@ -28,7 +28,7 @@ def getLeg1ThresholdForDoubleEle(year, hltTrigger='HLT_Ele23_Ele12_CaloIdL_Track
     lumis = LumiList(filename = json) + LumiList(filename = jsonToMerge)
     lumis.writeJSON(fileName=json)
 
-  prescalePage = 'https://tomc.web.cern.ch/tomc/triggerPrescales/%s/' % year
+  prescalePage = 'https://ram1123.github.io/display_TriggerPreScale/%s/' % year
   dirToStore   = os.path.join('prescaleInformation', year, hltTrigger)
   download(prescalePage + hltTrigger + '.php', dirToStore)
   with open(os.path.join(dirToStore, hltTrigger + '.php')) as f:
@@ -37,6 +37,9 @@ def getLeg1ThresholdForDoubleEle(year, hltTrigger='HLT_Ele23_Ele12_CaloIdL_Track
 	download(prescalePage + line.split('>')[0].split('=')[-1], dirToStore)
 
   jsonForThreshold = {}
+  print
+  print glob.glob(os.path.join(dirToStore, '*.json'))
+  print
   for json in glob.glob(os.path.join(dirToStore, '*.json')):
     leg1 = int(json.split('L1_DoubleEG_')[-1].split('_')[0].replace('LooseIso', ''))
     leg2 = int(json.split('L1_DoubleEG_')[-1].split('_')[1].replace('LooseIso', ''))
@@ -59,5 +62,5 @@ def getLeg1ThresholdForDoubleEle(year, hltTrigger='HLT_Ele23_Ele12_CaloIdL_Track
 
 if __name__ == '__main__':
   print 'Testing:'
-  for threshold, json in getLeg1ThresholdForDoubleEle('2018', debug=True):
+  for threshold, json in getLeg1ThresholdForDoubleEle('2016', debug=True):
     print threshold, json

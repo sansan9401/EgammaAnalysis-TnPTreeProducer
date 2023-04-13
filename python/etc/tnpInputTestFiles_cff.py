@@ -19,6 +19,16 @@ filesMiniAOD_2016 = {
 
 
 # Some miniAOD UL testfiles, which are available now and hopefully don't get deleted too soon
+filesMiniAOD_UL2016preVFP = {
+    'mc':   cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/RunIISummer19UL16MiniAODAPV-DYJetsToLL_M-50.root'),
+    'data': cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/SingleElectron-Run2016E-21Feb2020_UL2016_HIPM.root'),
+}
+
+filesMiniAOD_UL2016postVFP = {
+    'mc':   cms.untracked.vstring(''),
+    'data': cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/SingleElectron-Run2016F-21Feb2020_UL2016-postVFP.root'),
+}
+
 filesMiniAOD_UL2018 = {
     'mc' :   cms.untracked.vstring('root://cms-xrd-global.cern.ch//store/mc/RunIISummer19UL18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/106X_upgrade2018_realistic_v11_L1v1-v2/70000/EA2F219D-8534-7B4D-AF83-5D91AF448EC6.root'),
     'data' : cms.untracked.vstring('root://cms-xrd-global.cern.ch//store/data/Run2018A/EGamma/MINIAOD/12Nov2019_UL2018-v2/270000/D9CE2EBF-5031-314C-97CC-F502CF7765E8.root'),
@@ -41,6 +51,16 @@ filesMiniAOD_UL2016postVFP = {
 
 
 # AOD UL testfiles
+filesAOD_UL2016preVFP = {
+    'mc':   cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/RunIISummer19UL16RECOAPV-DYJetsToLL_M-50.root'),
+    'data': cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/SingleElectron-Run2016E-21Feb2020_UL2016_HIPM-AOD.root'),
+}
+
+filesAOD_UL2016postVFP = {
+    'mc':   cms.untracked.vstring(''),
+    'data': cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/SingleElectron-Run2016F-21Feb2020_UL2016-postVFP-AOD.root'),
+}
+
 filesAOD_UL2018 = {
     'mc' :   cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/RunIISummer19UL18RECO-DYToEE_M-50.root'),
     'data' : cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/Egamma-Run2018D-12Nov2019_UL2018-AOD.root'),

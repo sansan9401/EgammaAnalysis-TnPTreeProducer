@@ -35,6 +35,15 @@
 #include <regex>
 #include "TMath.h"
 
+//Since this is supposed to run both with CMSSW_10_2_X and CMSSW_10_6_X
+//but some of the methods changed and are not compatible, we use this check
+//on the compiler version to establish whether we are in a 102X or 106X release.
+//102X still have a 7.3.X version of gcc, while 106X have 7.4.X 
+#define GCC_VERSION ( 10000 * __GNUC__ + 100 * __GNUC_MINOR__ + __GNUC_PATCHLEVEL__ )
+
+#if GCC_VERSION > 70400
+#define CMSSW_106plus
+#endif
 
 template <class T>
 class ElectronVariableHelper : public edm::EDProducer {
@@ -262,7 +271,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     pfPtVals.push_back(pfpt);
 
     // Store hasMatchedConversion (currently stored as float instead of bool, as it allows to implement it in the same way as other variables)
-    #if (CMSSW_MAJOR_VERSION>=10 && CMSSW_MINOR_VERSION>=4) || (CMSSW_MAJOR_VERSION>=11)
+    #ifdef CMSSW_106plus
     hasMatchedConversionVals.push_back((float)ConversionTools::hasMatchedConversion(*probe, *conversions, beamSpot->position()));
     #else
     hasMatchedConversionVals.push_back((float)ConversionTools::hasMatchedConversion(*probe, conversions, beamSpot->position()));
@@ -271,7 +280,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     // Conversion vertex fit
     float convVtxFitProb = -1.;
 
-    #if (CMSSW_MAJOR_VERSION>=10 && CMSSW_MINOR_VERSION>=4) || (CMSSW_MAJOR_VERSION>=11)
+    #ifdef CMSSW_106plus
     reco::Conversion const* convRef = ConversionTools::matchedConversion(*probe,*conversions, beamSpot->position());
     if(!convRef==0) {
         const reco::Vertex &vtx = convRef->conversionVertex();
@@ -282,10 +291,10 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     #else
     reco::ConversionRef convRef = ConversionTools::matchedConversion(*probe, conversions, beamSpot->position());
     if(!convRef.isNull()) {
-        const reco::Vertex &vtx = convRef.get()->conversionVertex();
-        if (vtx.isValid()) {
-            convVtxFitProb = TMath::Prob( vtx.chi2(),  vtx.ndof());
-        }
+      const reco::Vertex &vtx = convRef.get()->conversionVertex();
+      if (vtx.isValid()) {
+	convVtxFitProb = TMath::Prob( vtx.chi2(),  vtx.ndof());
+      }
     }
     #endif
     convVtxFitProbVals.push_back(convVtxFitProb);

@@ -47,7 +47,8 @@ if varOptions.isAOD and varOptions.doTrigger:  log.warning('AOD is not supported
 if not varOptions.isAOD and varOptions.doRECO: log.warning('miniAOD is not supported for doRECO, please consider using AOD')
 
 from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
-if varOptions.era not in ['2016', '2017', '2018', 'UL2016preVFP', 'UL2016postVFP', 'UL2017', 'UL2018']: log.error('%s is not a valid era' % varOptions.era)
+if varOptions.era not in ['2016', '2017', '2018', 'UL2016preVFP', 'UL2016postVFP', 'UL2017', 'UL2018']: 
+  log.error('%s is not a valid era' % varOptions.era)
 if ('UL' in varOptions.era)!=(isReleaseAbove(10, 6)):
   log.error('Inconsistent release for era %s. Use CMSSW_10_6_X for UL and CMSSW_10_2_X for rereco' % varOptions.era)
 
@@ -101,7 +102,7 @@ if varOptions.GT == "auto":
     if options['era'] == '2018':   options['GLOBALTAG'] = '102X_upgrade2018_realistic_v21'
     if options['era'] == 'UL2016preVFP': options['GLOBALTAG'] = '106X_mcRun2_asymptotic_preVFP_v11'
     if options['era'] == 'UL2016postVFP': options['GLOBALTAG'] = '106X_mcRun2_asymptotic_v17'    
-    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_mc2017_realistic_v8'
+    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_mc2017_realistic_v9'
     if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_upgrade2018_realistic_v15_L1v1'
   else:
     if options['era'] == '2016':   options['GLOBALTAG'] = '94X_dataRun2_v10'

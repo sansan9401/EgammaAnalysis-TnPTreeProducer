@@ -83,7 +83,7 @@ from multiprocessing import Process
 def submitWrapper(requestName, sample, era, extraParam=[]):
   if doL1matching:
     from getLeg1ThresholdForDoubleEle import getLeg1ThresholdForDoubleEle
-    for leg1Threshold, json in getLeg1ThresholdForDoubleEle(era):
+    for leg1Threshold, json in getLeg1ThresholdForDoubleEle(era.replace("UL","").replace("preVFP","").replace("postVFP","")):
       print 'Submitting for leg 1 threshold %s' % (leg1Threshold)
       p = Process(target=submit, args=(config, '%s_leg1Threshold%s' % (requestName, leg1Threshold), sample, era, json, extraParam + ['L1Threshold=%s' % leg1Threshold]))
       p.start()
