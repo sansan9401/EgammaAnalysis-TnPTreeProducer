@@ -112,8 +112,8 @@ def setTagsProbes(process, options):
                                             mcStatus = cms.vint32(),
                                             mcPdgId  = cms.vint32(),
                                             checkCharge = cms.bool(False),
-                                            maxDeltaR   = cms.double(0.20),   # Minimum deltaR for the match
-                                            maxDPtRel   = cms.double(50.0),    # Minimum deltaPt/Pt for the match
+                                            maxDeltaR   = cms.double(0.1),   # Minimum deltaR for the match
+                                            maxDPtRel   = cms.double(0.5),    # Minimum deltaPt/Pt for the match
                                             resolveAmbiguities    = cms.bool(False), # Forbid two RECO objects to match to the same GEN objec
                                             resolveByMatchQuality = cms.bool(True),  # False = just match input in order; True = pick lowest deltaR pair first
                                             )
@@ -124,7 +124,7 @@ def setTagsProbes(process, options):
 
 
     ########################### TnP pairs ############################
-    masscut = cms.string("50<mass<130")
+    masscut = cms.string("50<mass<150")
     process.tnpPairingEleHLT   = cms.EDProducer("CandViewShallowCloneCombiner",
                                         decay = cms.string("tagEle probeEle"),
                                         checkCharge = cms.bool(False),

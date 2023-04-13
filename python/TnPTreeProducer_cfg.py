@@ -99,18 +99,18 @@ if varOptions.GT == "auto":
     if options['era'] == '2016':   options['GLOBALTAG'] = '94X_mcRun2_asymptotic_v3'
     if options['era'] == '2017':   options['GLOBALTAG'] = '94X_mc2017_realistic_v17'
     if options['era'] == '2018':   options['GLOBALTAG'] = '102X_upgrade2018_realistic_v21'
-    if options['era'] == 'UL2016preVFP': options['GLOBALTAG'] = '106X_mcRun2_asymptotic_preVFP_v9'
-    if options['era'] == 'UL2016postVFP': options['GLOBALTAG'] = '106X_mcRun2_asymptotic_v15'    
+    if options['era'] == 'UL2016preVFP': options['GLOBALTAG'] = '106X_mcRun2_asymptotic_preVFP_v11'
+    if options['era'] == 'UL2016postVFP': options['GLOBALTAG'] = '106X_mcRun2_asymptotic_v17'    
     if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_mc2017_realistic_v8'
     if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_upgrade2018_realistic_v15_L1v1'
   else:
     if options['era'] == '2016':   options['GLOBALTAG'] = '94X_dataRun2_v10'
     if options['era'] == '2017':   options['GLOBALTAG'] = '94X_dataRun2_v11'
     if options['era'] == '2018':   options['GLOBALTAG'] = '102X_dataRun2_v13'
-    if options['era'] == 'UL2016preVFP': options['GLOBALTAG'] = '106X_dataRun2_v32'
-    if options['era'] == 'UL2016postVFP': options['GLOBALTAG'] = '106X_dataRun2_v32'
-    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_dataRun2_v32'
-    if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_dataRun2_v32'
+    if options['era'] == 'UL2016preVFP': options['GLOBALTAG'] = '106X_dataRun2_v35'
+    if options['era'] == 'UL2016postVFP': options['GLOBALTAG'] = '106X_dataRun2_v35'
+    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_dataRun2_v35'
+    if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_dataRun2_v35'
 else:
   options['GLOBALTAG'] = varOptions.GT
 
