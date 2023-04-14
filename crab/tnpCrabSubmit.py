@@ -4,10 +4,14 @@ import os
 #
 # Example script to submit TnPTreeProducer to crab
 #
-submitVersion = "2021-08-24" # add some date here
+submitVersion = "2023-04-13" # add some date here
 doL1matching  = False
+isAOD=False
 
-defaultArgs   = ['doEleID=True','doPhoID=False','doTrigger=True']
+if isAOD:
+  defaultArgs   = ['isAOD=True','doRECO=True','doEleID=False','doPhoID=False','doTrigger=False']
+else:
+  defaultArgs   = ['doEleID=True','doPhoID=False','doTrigger=True']
 mainOutputDir = '/store/user/hyseo/EgammaTnP/%s' % ( submitVersion)
 
 # Logging the current version of TnpTreeProducer here, such that you can find back what the actual code looked like when you were submitting
@@ -67,6 +71,7 @@ def submit(config, requestName, sample, era, json, extraParam=[]):
   config.Data.lumiMask        = None if isMC else json
   config.Data.unitsPerJob     = 5 if isMC else 25
   config.JobType.pyCfgParams  = defaultArgs + ['isMC=True' if isMC else 'isMC=False', 'era=%s' % era] + extraParam
+  #config.Data.partialDataset = True
 
   print config
   try:                           crabCommand('submit', config = config)
@@ -101,46 +106,59 @@ def submitWrapper(requestName, sample, era, extraParam=[]):
 #
 from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
 if isReleaseAbove(10,6):  
-  era       = 'UL2016preVFP'
-  #submitWrapper('Run2016B', '/SingleElectron/Run2016B-21Feb2020_ver2_UL2016_HIPM-v1/MINIAOD', era)
-  #submitWrapper('Run2016C', '/SingleElectron/Run2016C-21Feb2020_UL2016_HIPM-v1/MINIAOD', era)
-  #submitWrapper('Run2016D', '/SingleElectron/Run2016D-21Feb2020_UL2016_HIPM-v1/MINIAOD', era)
-  #submitWrapper('Run2016E', '/SingleElectron/Run2016E-21Feb2020_UL2016_HIPM-v1/MINIAOD', era)
-  #submitWrapper('Run2016F', '/SingleElectron/Run2016F-21Feb2020_UL2016_HIPM-v1/MINIAOD', era)
+  if isAOD:
+    #submitWrapper('Run2017B', '/SingleElectron/Run2017B-09Aug2019_UL2017-v1/AOD', "UL2017")
+    #submitWrapper('Run2017C', '/SingleElectron/Run2017C-09Aug2019_UL2017-v1/AOD', "UL2017")
+    #submitWrapper('Run2017D', '/SingleElectron/Run2017D-09Aug2019_UL2017-v1/AOD', "UL2017")
+    #submitWrapper('Run2017E', '/SingleElectron/Run2017E-09Aug2019_UL2017-v1/AOD', "UL2017")
+    #submitWrapper('Run2017F', '/SingleElectron/Run2017F-09Aug2019_UL2017_rsb-v2/AOD', "UL2017")
 
-  #submitWrapper('DY_NNLO',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v2/MINIAODSIM', era)
-  #submitWrapper('DY_NLO',  '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v1/MINIAODSIM', era)
-  #submitWrapper('DY_LO',   '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v1/MINIAODSIM', era)
+    #submitWrapper('DY_NNLO_partial',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL17RECO-106X_mc2017_realistic_v6-v2/AODSIM', "UL2017")
+    #submitWrapper('DY_NNLO',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL17RECO-106X_mc2017_realistic_v6-v2/AODSIM', "UL2017")
+    #submitWrapper('DY_NLO',  '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer19UL17RECO-106X_mc2017_realistic_v6-v2/AODSIM', "UL2017")
+    #submitWrapper('DY_LO',   '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17RECO-106X_mc2017_realistic_v6-v1/AODSIM', "UL2017")
+    
+  else:
+    era       = 'UL2016preVFP'
+    #submitWrapper('Run2016B', '/SingleElectron/Run2016B-21Feb2020_ver2_UL2016_HIPM-v1/MINIAOD', era)
+    #submitWrapper('Run2016C', '/SingleElectron/Run2016C-21Feb2020_UL2016_HIPM-v1/MINIAOD', era)
+    #submitWrapper('Run2016D', '/SingleElectron/Run2016D-21Feb2020_UL2016_HIPM-v1/MINIAOD', era)
+    #submitWrapper('Run2016E', '/SingleElectron/Run2016E-21Feb2020_UL2016_HIPM-v1/MINIAOD', era)
+    #submitWrapper('Run2016F', '/SingleElectron/Run2016F-21Feb2020_UL2016_HIPM-v1/MINIAOD', era)
+  
+    #submitWrapper('DY_NNLO',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v2/MINIAODSIM', era)
+    #submitWrapper('DY_NLO',  '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v1/MINIAODSIM', era)
+    #submitWrapper('DY_LO',   '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v1/MINIAODSIM', era)
 
-  era       = 'UL2016postVFP'
-  #submitWrapper('Run2016F', '/SingleElectron/Run2016F-21Feb2020_UL2016-v1/MINIAOD', era)
-  #submitWrapper('Run2016G', '/SingleElectron/Run2016G-21Feb2020_UL2016-v1/MINIAOD', era)
-  #submitWrapper('Run2016H', '/SingleElectron/Run2016H-21Feb2020_UL2016-v2/MINIAOD', era)
+    era       = 'UL2016postVFP'
+    #submitWrapper('Run2016F', '/SingleElectron/Run2016F-21Feb2020_UL2016-v1/MINIAOD', era)
+    #submitWrapper('Run2016G', '/SingleElectron/Run2016G-21Feb2020_UL2016-v1/MINIAOD', era)
+    #submitWrapper('Run2016H', '/SingleElectron/Run2016H-21Feb2020_UL2016-v2/MINIAOD', era)
 
-  #submitWrapper('DY_NNLO',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v2/MINIAODSIM', era)
-  #submitWrapper('DY_NLO',  '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v2/MINIAODSIM', era)
-  #submitWrapper('DY_LO',   '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v2/MINIAODSIM', era)
+    #submitWrapper('DY_NNLO',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v2/MINIAODSIM', era)
+    #submitWrapper('DY_NLO',  '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v2/MINIAODSIM', era)
+    #submitWrapper('DY_LO',   '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAOD-106X_mcRun2_asymptotic_v13-v2/MINIAODSIM', era)
 
-  era       = 'UL2017'
-  #submitWrapper('Run2017B', '/SingleElectron/Run2017B-09Aug2019_UL2017-v1/MINIAOD', era)
-  #submitWrapper('Run2017C', '/SingleElectron/Run2017C-09Aug2019_UL2017-v1/MINIAOD', era)
-  #submitWrapper('Run2017D', '/SingleElectron/Run2017D-09Aug2019_UL2017-v1/MINIAOD', era)
-  #submitWrapper('Run2017E', '/SingleElectron/Run2017E-09Aug2019_UL2017-v1/MINIAOD', era)
-  #submitWrapper('Run2017F', '/SingleElectron/Run2017F-09Aug2019_UL2017_rsb-v2/MINIAOD', era)
+    era       = 'UL2017'
+    #submitWrapper('Run2017B', '/SingleElectron/Run2017B-09Aug2019_UL2017-v1/MINIAOD', era)
+    #submitWrapper('Run2017C', '/SingleElectron/Run2017C-09Aug2019_UL2017-v1/MINIAOD', era)
+    #submitWrapper('Run2017D', '/SingleElectron/Run2017D-09Aug2019_UL2017-v1/MINIAOD', era)
+    #submitWrapper('Run2017E', '/SingleElectron/Run2017E-09Aug2019_UL2017-v1/MINIAOD', era)
+    #submitWrapper('Run2017F', '/SingleElectron/Run2017F-09Aug2019_UL2017_rsb-v2/MINIAOD', era)
 
-  #submitWrapper('DY_NNLO',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL17MiniAOD-106X_mc2017_realistic_v6-v2/MINIAODSIM', era)
-  #submitWrapper('DY_NLO',  '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/MINIAODSIM', era)
-  #submitWrapper('DY_LO',   '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17MiniAOD-106X_mc2017_realistic_v6-v1/MINIAODSIM', era)
+    #submitWrapper('DY_NNLO',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL17MiniAOD-106X_mc2017_realistic_v6-v2/MINIAODSIM', era)
+    #submitWrapper('DY_NLO',  '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer19UL17MiniAOD-106X_mc2017_realistic_v6-v2/MINIAODSIM', era)
+    #submitWrapper('DY_LO',   '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17MiniAOD-106X_mc2017_realistic_v6-v1/MINIAODSIM', era)
 
-  era       = 'UL2018'
-  #submitWrapper('Run2018A', '/EGamma/Run2018A-12Nov2019_UL2018-v2/MINIAOD', era)
-  #submitWrapper('Run2018B', '/EGamma/Run2018B-12Nov2019_UL2018-v2/MINIAOD', era)
-  #submitWrapper('Run2018C', '/EGamma/Run2018C-12Nov2019_UL2018-v2/MINIAOD', era)
-  #submitWrapper('Run2018D', '/EGamma/Run2018D-12Nov2019_UL2018-v8/MINIAOD', era)
+    era       = 'UL2018'
+    #submitWrapper('Run2018A', '/EGamma/Run2018A-12Nov2019_UL2018-v2/MINIAOD', era)
+    #submitWrapper('Run2018B', '/EGamma/Run2018B-12Nov2019_UL2018-v2/MINIAOD', era)
+    #submitWrapper('Run2018C', '/EGamma/Run2018C-12Nov2019_UL2018-v2/MINIAOD', era)
+    #submitWrapper('Run2018D', '/EGamma/Run2018D-12Nov2019_UL2018-v8/MINIAOD', era)
 
-  submitWrapper('DY_NNLO',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v2/MINIAODSIM', era)
-  #submitWrapper('DY_NLO',   '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer19UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v2/MINIAODSIM', era)
-  #submitWrapper('DY_LO',    '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1/MINIAODSIM', era)
+    #submitWrapper('DY_NNLO',  '/DYJetsToEE_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v2/MINIAODSIM', era)
+    #submitWrapper('DY_NLO',   '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer19UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v2/MINIAODSIM', era)
+    #submitWrapper('DY_LO',    '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v1/MINIAODSIM', era)
 
 else:
   era       = '2016'
